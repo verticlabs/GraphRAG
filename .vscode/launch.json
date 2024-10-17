@@ -5,6 +5,17 @@
             "name": "Python: Module",
             "type": "debugpy",
             "request": "launch",
+            "module": "chatbot_api.src.agents.hospital_rag_agent",
+            "python": "/opt/anaconda3/envs/cvd_rag/bin/python",
+            "justMyCode": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}:${workspaceFolder}/chatbot_api"
+            }
+        },
+        {
+            "name": "Python: Module",
+            "type": "debugpy",
+            "request": "launch",
             "module": "chatbot_api.src.chains.hospital_review_chain",
             "python": "/opt/anaconda3/envs/cvd_rag/bin/python",
             "justMyCode": true,

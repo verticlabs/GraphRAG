@@ -24,7 +24,7 @@ async def get_status():
     return {"status": "running"}
 
 
-@app.post("/hospital-rag-agent")
+@app.post("/cvd-rag-agent")
 async def ask_hospital_agent(query: HospitalQueryInput) -> HospitalQueryOutput:
     query_response = await invoke_agent_with_retry(query.text)
     query_response["intermediate_steps"] = [

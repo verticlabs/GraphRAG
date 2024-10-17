@@ -1,11 +1,11 @@
 from pydantic import BaseModel
 
 
-class HospitalQueryInput(BaseModel):
+class CVDQueryInput(BaseModel):
     text: str
 
 
-class HospitalQueryOutput(BaseModel):
+class CVDQueryOutput(BaseModel):
     input: str
     output: str
     intermediate_steps: list[str]

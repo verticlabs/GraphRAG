@@ -10,7 +10,7 @@ from langchain.prompts import (
     ChatPromptTemplate,
 )
 
-HOSPITAL_QA_MODEL = os.getenv("AGENT_MODEL")
+MODEL = os.getenv("AGENT_MODEL")
 
 # Define the list of properties to include in the text dictionary
 # retrieval_query = """WITH node AS Post, score as similarity
@@ -80,7 +80,7 @@ review_prompt = ChatPromptTemplate(
 )
 
 reviews_vector_chain = RetrievalQA.from_chain_type(
-    llm=ChatOpenAI(model=HOSPITAL_QA_MODEL, temperature=0),
+    llm=ChatOpenAI(model=MODEL, temperature=0),
     chain_type="stuff",
     retriever=neo4j_vector_index.as_retriever(k=20),
 )

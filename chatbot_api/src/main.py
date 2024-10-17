@@ -1,11 +1,11 @@
 from fastapi import FastAPI
 from src.agents.hospital_rag_agent import hospital_rag_agent_executor
-from src.models.hospital_rag_query import HospitalQueryInput, HospitalQueryOutput
+from src.models.hospital_rag_query import CVDQueryInput, CVDQueryOutput
 from src.utils.async_utils import async_retry
 
 app = FastAPI(
-    title="Hospital Chatbot",
-    description="Endpoints for a hospital system graph RAG chatbot",
+    title="CVD Chatbot",
+    description="Endpoints for a cvd system graph RAG chatbot",
 )
 
 
@@ -24,8 +24,8 @@ async def get_status():
     return {"status": "running"}
 
 
-@app.post("/hospital-rag-agent")
-async def ask_hospital_agent(query: HospitalQueryInput) -> HospitalQueryOutput:
+@app.post("/cvd-rag-agent")
+async def ask_cvd_agent(query: CVDQueryInput) -> CVDQueryOutput:
     query_response = await invoke_agent_with_retry(query.text)
     query_response["intermediate_steps"] = [
         str(s) for s in query_response["intermediate_steps"]
