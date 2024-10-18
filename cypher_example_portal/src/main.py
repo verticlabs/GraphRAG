@@ -14,7 +14,7 @@ with st.sidebar:
         """
     This app allows you to add example questions and their corresponding
     Cypher queries to a vector index used by the
-    [Hospital System Chatbot](https://github.com/hfhoffman1144/langchain_neo4j_rag_app).
+    [cvd System Chatbot](https://github.com/hfhoffman1144/langchain_neo4j_rag_app).
 
     When you ask the chatbot to generate Cypher queries, it dynamically retrieves
     semantically similar questions and their corresponding Cypher queries from the

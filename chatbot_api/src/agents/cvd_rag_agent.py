@@ -7,14 +7,14 @@ from langchain.agents.format_scratchpad.openai_tools import (
     format_to_openai_tool_messages,
 )
 from langchain.agents.output_parsers.openai_tools import OpenAIToolsAgentOutputParser
-from src.chains.hospital_review_chain import reviews_vector_chain
-from src.chains.hospital_cypher_chain import hospital_cypher_chain
+from src.chains.cvd_review_chain import reviews_vector_chain
+from src.chains.cvd_cypher_chain import cvd_cypher_chain
 
 
-HOSPITAL_AGENT_MODEL = os.getenv("AGENT_MODEL")
+AGENT_MODEL = os.getenv("AGENT_MODEL")
 
 agent_chat_model = ChatOpenAI(
-    model=HOSPITAL_AGENT_MODEL,
+    model=AGENT_MODEL,
     temperature=0,
 )
 
@@ -45,7 +45,7 @@ def explore_graph_database(question: str) -> str:
     associated social media accounts?", input the full question.
     """
 
-    return hospital_cypher_chain.invoke(question)
+    return cvd_cypher_chain.invoke(question)
 
 
 
@@ -74,7 +74,7 @@ agent_prompt = ChatPromptTemplate.from_messages(
 
 agent_llm_with_tools = agent_chat_model.bind_tools(agent_tools)
 
-hospital_rag_agent = (
+cvd_rag_agent = (
     {
         "input": lambda x: x["input"],
         "agent_scratchpad": lambda x: format_to_openai_tool_messages(
@@ -86,8 +86,8 @@ hospital_rag_agent = (
     | OpenAIToolsAgentOutputParser()
 )
 
-hospital_rag_agent_executor = AgentExecutor(
-    agent=hospital_rag_agent,
+cvd_rag_agent_executor = AgentExecutor(
+    agent=cvd_rag_agent,
     tools=agent_tools,
     verbose=True,
     return_intermediate_steps=True,
@@ -95,5 +95,5 @@ hospital_rag_agent_executor = AgentExecutor(
 
 
 if __name__ == "__main__":
-    response = hospital_rag_agent_executor.invoke({"input": "What does people think about IL-6 inhibitors?"})
+    response = cvd_rag_agent_executor.invoke({"input": "What does people think about IL-6 inhibitors?"})
     print(response.get("output"))

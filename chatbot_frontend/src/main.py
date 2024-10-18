@@ -1,6 +1,7 @@
 import os
 import requests
 import streamlit as st
+import json
 
 CHATBOT_URL = os.getenv("CHATBOT_URL", "http://localhost:8000/cvd-rag-agent")
 
@@ -54,7 +55,19 @@ if prompt := st.chat_input("What do you want to know?"):
 
         if response.status_code == 200:
             output_text = response.json()["output"]
-            explanation = response.json()["intermediate_steps"]
+            intermediate_steps = response.json().get("intermediate_steps", [])
+            
+            explanation_parts = []
+            for step in intermediate_steps:
+                if isinstance(step, dict):
+                    step_str = json.dumps(step, indent=2)
+                    # Replace newlines with two spaces and a newline for Streamlit
+                    step_str = step_str.replace('\n', '  \n')
+                else:
+                    step_str = str(step)
+                explanation_parts.append(step_str)
+            
+            explanation = "  \n  \n".join(explanation_parts)
 
         else:
             output_text = """An error occurred while processing your message.

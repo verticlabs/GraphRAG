@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from src.agents.hospital_rag_agent import hospital_rag_agent_executor
-from src.models.hospital_rag_query import CVDQueryInput, CVDQueryOutput
+from src.agents.cvd_rag_agent import cvd_rag_agent_executor
+from src.models.cvd_rag_query import CVDQueryInput, CVDQueryOutput
 from src.utils.async_utils import async_retry
 
 app = FastAPI(
@@ -16,7 +16,7 @@ async def invoke_agent_with_retry(query: str):
     are intermittent connection issues to external APIs.
     """
 
-    return await hospital_rag_agent_executor.ainvoke({"input": query})
+    return await cvd_rag_agent_executor.ainvoke({"input": query})
 
 
 @app.get("/")
@@ -32,3 +32,6 @@ async def ask_cvd_agent(query: CVDQueryInput) -> CVDQueryOutput:
     ]
 
     return query_response
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
